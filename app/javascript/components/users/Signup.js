@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import API from "../../utils/API";
+
 class Signup extends React.Component {
   constructor() {
     super();
@@ -8,7 +10,7 @@ class Signup extends React.Component {
         name: "",
         email: "",
         password: "",
-        passwordConfirmation: "",
+        password_confirmation: "",
       },
     };
   }
@@ -24,14 +26,16 @@ class Signup extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello world", this.state.user);
+    API.postNewUser({ user: this.state.user }).then((response) => {
+      console.log(response, "response");
+    });
   };
   render() {
     return (
       <React.Fragment>
-        <div className="container p-5 font-size w-75">
-          <form className="font-family" onSubmit={this.handleSubmit}>
-            <div className="form-group black">
+        <div className="container d-flex justify-content-center">
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group col-md-6">
               <input
                 name="name"
                 onChange={this.handleChange}
@@ -40,7 +44,7 @@ class Signup extends React.Component {
                 type="text"
               />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-6">
               <input
                 onChange={this.handleChange}
                 name="email"
@@ -49,7 +53,7 @@ class Signup extends React.Component {
                 placeholder="email"
               />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-6">
               <input
                 onChange={this.handleChange}
                 name="password"
@@ -58,10 +62,10 @@ class Signup extends React.Component {
                 type="password"
               />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-6">
               <input
                 onChange={this.handleChange}
-                name="passwordConfirmation"
+                name="password_confirmation"
                 value={this.state.user.passwordConfirmation}
                 placeholder="password confirmation"
                 type="password"
