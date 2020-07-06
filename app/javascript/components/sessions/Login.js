@@ -26,7 +26,7 @@ class Login extends React.Component {
       console.log(res);
       if (res.status == 200) {
         console.log(res.status);
-        window.location.href = "/";
+        window.location.href = "/articles";
       }
     });
   };

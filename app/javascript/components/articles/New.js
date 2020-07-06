@@ -1,4 +1,6 @@
 import React from "react";
+import * as Routes from "../../utils/Routes";
+import API from "../../utils/API";
 
 class New extends React.Component {
   constructor() {
@@ -24,7 +26,11 @@ class New extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    alert("submit clicked");
+    API.postNewArticle(this.state.article).then((res) => {
+      if (res.status == 200) {
+        window.location.href = "/articles";
+      }
+    });
   };
 
   render() {

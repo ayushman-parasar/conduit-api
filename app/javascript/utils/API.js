@@ -33,4 +33,13 @@ export default {
       return response;
     });
   },
+  postNewArticle: (payload) => {
+    return fetch(Routes.articles_new_path(), {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    }).then((res) => {
+      return res;
+    });
+  },
 };
