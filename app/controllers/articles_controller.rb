@@ -1,10 +1,12 @@
 class ArticlesController < ApplicationController
-  before_action :ensure_logged_in
+  before_action :ensure_logged_in , only:[:create]
   
 
 
   def index
-    @articles = Article.all
+    @articles = Article.all.includes(:tags)
+    puts @articles.inspect, "all articles"
+    render json: {articles: @articles}
   end
 
   def new
@@ -16,10 +18,12 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    puts params[:tags],"hello "
     @article = Article.new(article_params)
     @article.user_id = @current_user.id
+    # @article.all_tags(params[:taglist])
     puts @article.inspect, 'resultant article'
-    if @article.save
+    if @article.save      
       render status: :ok, json:{notice:"Article created successfully"}
     else
       error_message = @article.errors.full_messages
@@ -38,7 +42,8 @@ class ArticlesController < ApplicationController
 
   private 
     def article_params
-      params.require(:article).permit(:title, :content)
+      # params.require(:article).permit(:title, :content, tags: [:content])
+      params.require(:article).permit(:title, :content, :taglist)
     end
 
 
