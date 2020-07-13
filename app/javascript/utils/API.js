@@ -54,10 +54,9 @@ export default {
     });
   },
   fetchTags: () => {
-    return axios("https://conduit.productionready.io/api/tags", {
+    return axios("/tags", {
       method: "GET",
       headers,
-      mode: "cors",
     }).then((res) => {
       console.log(res, "tags");
       return res;

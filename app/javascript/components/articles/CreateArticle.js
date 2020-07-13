@@ -33,7 +33,7 @@ class CreateArticle extends React.Component {
       title,
       content,
       // taglist,
-      tags: taglist.split(", ").map((tag) => ({ content: tag })),
+      tags_attributes: taglist.split(", ").map((tag) => ({ content: tag })),
     };
     console.log(payload, "payload");
     API.postNewArticle(payload).then((res) => {

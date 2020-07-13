@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
-  before_action :ensure_logged_in , only:[:create]
+  before_action :ensure_logged_in 
   
 
 
   def index
-    @articles = Article.all.includes(:tags)
+    @articles = Article.all
     puts @articles.inspect, "all articles"
     render json: {articles: @articles}
   end
@@ -18,17 +18,24 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    puts params[:tags],"hello "
+    
     @article = Article.new(article_params)
     @article.user_id = @current_user.id
     # @article.all_tags(params[:taglist])
     puts @article.inspect, 'resultant article'
     if @article.save      
-      render status: :ok, json:{notice:"Article created successfully"}
+      render status: :ok, json:{notice:"Article created successfully",article:@article}
     else
       error_message = @article.errors.full_messages
       render status: :unprocessable_entity, json:{errors: error_message}
     end
+  end
+
+  def user_feed()
+    puts params, "checking in user_feed"
+    @articles = Article.where(user_id: id)
+    puts @article.inspect, "articles by the user"
+    render json: {articles: @articles}
   end
 
   def update
@@ -40,11 +47,13 @@ class ArticlesController < ApplicationController
     end
   end
 
+  
   private 
     def article_params
       # params.require(:article).permit(:title, :content, tags: [:content])
-      params.require(:article).permit(:title, :content, :taglist)
+      params.require(:article).permit(:title, :content, :tags)
     end
 
+    
 
 end
