@@ -1,11 +1,26 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 // import "../../App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 
-function Navbarout(props) {
-  return (
-    <Router>
+class Navbarout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    fetch("/sessions", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res, "cdm navbarout");
+      });
+  }
+  render() {
+    return (
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="header-container header container">
           <Link
@@ -28,24 +43,24 @@ function Navbarout(props) {
                 <a className="nav-link nav-item navFont" href="/">
                   Home
                 </a>
-                <a className="nav-link nav-item navFont" href="/articles/new">
+                <Link className="nav-link nav-item navFont" to="/articles/new">
                   New Post
-                </a>
-                <a
+                </Link>
+                {/* <a
                   className="nav-link nav-item navFont"
-                  href={`/user/${props.id}`}
+                  href={`/user/${thisprops.id}`}
                 >
                   Setting
-                </a>
-                <a className="nav-link nav-item navFont" href="/register">
+                </a> */}
+                {/* <a className="nav-link nav-item navFont" href="/register">
                   {props.name}
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
         </div>
       </nav>
-    </Router>
-  );
+    );
+  }
 }
 export default Navbarout;

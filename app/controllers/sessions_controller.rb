@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  
   def new
   end
 
@@ -11,5 +12,10 @@ class SessionsController < ApplicationController
     else
       render status: :not_found, json: { errors: "Incorrect credentials, try again later"}
     end
+  end
+
+  def index
+    # @currentUser = current_user
+    render json: {currentuser: current_user}
   end
 end

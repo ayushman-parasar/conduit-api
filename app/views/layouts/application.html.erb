@@ -10,11 +10,11 @@
   </head>
 
   <body>
-    <% if logged_in? %>
+    <!-- <% if logged_in? %>
       <%= react_component "navigation/Navbarout", {name: @current_user.name, id: @current_user.id} %>
     <% else %>
       <%= react_component "navigation/Navbarin" %>
-    <% end %>
+    <% end %> -->
     <%= yield %>
   </body>
 </html>
