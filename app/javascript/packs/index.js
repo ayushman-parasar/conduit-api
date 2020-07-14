@@ -5,14 +5,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "../components/App";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CreateArticle from "../components/articles/CreateArticle";
+import Navbarout from "../components/navigation/Navbarout";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <Router>
-      <Route path="/" component={App} />
-    </Router>,
+    <App />,
 
+    // <Navbarout />
+    // <Router>
+    //   <Switch>
+    //     <Route exact path="/" component={App} />
+    //     <Route exact path="/articles/new" component={CreateArticle} />
+    //   </Switch>
+    // </Router>
     document.body.appendChild(document.createElement("div"))
   );
 });

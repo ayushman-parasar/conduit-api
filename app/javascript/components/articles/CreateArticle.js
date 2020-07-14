@@ -10,7 +10,7 @@ class CreateArticle extends React.Component {
         title: "",
         content: "",
         errors: null,
-        taglist: [],
+        taglist: "",
         tag: [],
       },
     };

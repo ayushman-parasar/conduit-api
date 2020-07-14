@@ -18,15 +18,17 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    
-    @article = Article.new(article_params)
-    @article.user_id = @current_user.id
+    puts params, "dasdaasd"
+    @article = @current_user.articles.build(article_params)
+    # @article = Article.new(article_params)
+    # @article.user_id = @current_user.id
     # @article.all_tags(params[:taglist])
     puts @article.inspect, 'resultant article'
     if @article.save      
       render status: :ok, json:{notice:"Article created successfully",article:@article}
     else
       error_message = @article.errors.full_messages
+      puts error_message, "error"
       render status: :unprocessable_entity, json:{errors: error_message}
     end
   end
@@ -51,7 +53,7 @@ class ArticlesController < ApplicationController
   private 
     def article_params
       # params.require(:article).permit(:title, :content, tags: [:content])
-      params.require(:article).permit(:title, :content, tags_attributes: [:tags_attributes])
+      params.require(:article).permit(:title, :content, tags_attributes: [:content])
     end
 
     
