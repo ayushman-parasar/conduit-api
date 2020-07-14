@@ -2,7 +2,7 @@ import React from "react";
 import * as Routes from "../../utils/Routes";
 import API from "../../utils/API";
 
-class New extends React.Component {
+class CreateArticle extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -10,6 +10,8 @@ class New extends React.Component {
         title: "",
         content: "",
         errors: null,
+        taglist: [],
+        tag: [],
       },
     };
   }
@@ -25,8 +27,16 @@ class New extends React.Component {
   };
 
   handleSubmit = (e) => {
+    const { title, content, taglist } = this.state.article;
     e.preventDefault();
-    API.postNewArticle(this.state.article).then((res) => {
+    const payload = {
+      title,
+      content,
+      // taglist,
+      tags_attributes: taglist.split(", ").map((tag) => ({ content: tag })),
+    };
+    console.log(payload, "payload");
+    API.postNewArticle(payload).then((res) => {
       if (res.status == 200) {
         window.location.href = "/articles";
       }
@@ -34,6 +44,7 @@ class New extends React.Component {
   };
 
   render() {
+    console.log(this.state.article.taglist, "taglist");
     return (
       <>
         <h2>Form for new Article</h2>
@@ -60,16 +71,16 @@ class New extends React.Component {
                 Write your Content (in markdown)
               </textarea>
             </div>
-            {/* <div className="form-group">
+            <div className="form-group">
               <input
                 name="taglist"
-                value={this.state.taglist}
+                value={this.state.article.taglist}
                 onChange={this.handleChange}
                 type="text"
                 className="form-control"
                 placeholder="Enter tags"
               />
-            </div> */}
+            </div>
             <div className="button d-flex justify-content-end ">
               <button
                 type="submit"
@@ -85,4 +96,4 @@ class New extends React.Component {
   }
 }
 
-export default New;
+export default CreateArticle;

@@ -1,4 +1,5 @@
 import * as Routes from "./Routes";
+import axios from "axios";
 
 const headers = {
   Accept: "application/json",
@@ -16,7 +17,7 @@ export default {
       if (!response.ok) {
         return response;
       }
-      return response.json();
+      return response;
     });
   },
 
@@ -39,6 +40,25 @@ export default {
       headers,
       body: JSON.stringify(payload),
     }).then((res) => {
+      return res;
+    });
+  },
+  fetchArticles: () => {
+    return axios(Routes.articles_new_path(), {
+      method: "GET",
+      headers,
+      mode: "cors",
+    }).then((res) => {
+      console.log(res, "articles");
+      return res;
+    });
+  },
+  fetchTags: () => {
+    return axios("/tags", {
+      method: "GET",
+      headers,
+    }).then((res) => {
+      console.log(res, "tags");
       return res;
     });
   },

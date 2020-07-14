@@ -28,6 +28,9 @@ class Signup extends React.Component {
     e.preventDefault();
     API.postNewUser({ user: this.state.user }).then((response) => {
       console.log(response, "response");
+      if (response.status == 200) {
+        window.location.href = "/sessions/new";
+      }
     });
   };
   render() {
