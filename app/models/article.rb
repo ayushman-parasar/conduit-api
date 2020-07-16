@@ -1,9 +1,9 @@
 class Article < ApplicationRecord
   belongs_to :user
-  # has_many :taggings
-  # has_many :tags, through: :taggings
+  has_many :taggings
+  has_many :tags, through: :taggings
 
-  has_many :tags
+  # has_many :tags
   accepts_nested_attributes_for :tags
   
 

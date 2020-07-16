@@ -54,7 +54,7 @@ export default {
     });
   },
   fetchTags: () => {
-    return axios("/tags", {
+    return axios("api/v1/tags", {
       method: "GET",
       headers,
     }).then((res) => {
@@ -73,7 +73,7 @@ export default {
       });
   },
   updateUser: (id, payload) => {
-    return fetch(`/users/${id}`, {
+    return fetch(`/api/v1/users/${id}`, {
       method: "PATCH",
       headers,
       body: JSON.stringify(payload),
