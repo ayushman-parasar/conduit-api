@@ -46,15 +46,22 @@ class Navbarout extends React.Component {
                 <Link className="nav-link nav-item navFont" to="/articles/new">
                   New Post
                 </Link>
-                {/* <a
+                <Link
                   className="nav-link nav-item navFont"
-                  href={`/user/${thisprops.id}`}
+                  to={`/users/${
+                    this.props.currentUser && this.props.currentUser.id
+                  }/settings`}
                 >
-                  Setting
-                </a> */}
-                {/* <a className="nav-link nav-item navFont" href="/register">
+                  Settings
+                </Link>
+                {/* <Link
+                  className="nav-link nav-item navFont"
+                  to={`/users/${
+                    this.props.currentUser && this.props.currentUser.name
+                  }`}
+                >
                   {props.name}
-                </a> */}
+                </Link> */}
               </div>
             </div>
           </div>

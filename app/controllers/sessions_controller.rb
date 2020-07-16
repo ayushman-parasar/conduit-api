@@ -16,6 +16,6 @@ class SessionsController < ApplicationController
 
   def index
     # @currentUser = current_user
-    render json: {currentuser: current_user}
+    render json: {currentUser: current_user}
   end
 end

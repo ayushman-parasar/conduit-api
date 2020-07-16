@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :articles
   resources :sessions
   get "tags"=>"tags#index"
-  get "/:user_id/feed"=>"articles#user_feed"
+  get "users/:user_id/feed"=>"users#show_feed"
+  get "users/:id/settings"=> "users#show"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
