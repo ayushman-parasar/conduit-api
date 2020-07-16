@@ -38,7 +38,7 @@ class CreateArticle extends React.Component {
     console.log(payload, "payload");
     API.postNewArticle(payload).then((res) => {
       if (res.status == 200) {
-        window.location.href = "/articles";
+        window.location.href = "/";
       }
     });
   };

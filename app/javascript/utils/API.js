@@ -62,4 +62,24 @@ export default {
       return res;
     });
   },
+  fetchCurrentUser: () => {
+    return fetch("/sessions", {
+      method: "GET",
+      headers,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        return res;
+      });
+  },
+  updateUser: (id, payload) => {
+    return fetch(`/users/${id}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(payload),
+    }).then((res) => {
+      // console.log(res, "updateuser");
+      return res;
+    });
+  },
 };

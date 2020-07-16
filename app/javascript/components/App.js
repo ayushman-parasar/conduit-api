@@ -10,6 +10,9 @@ import Global from "./feed/Global";
 import Login from "./sessions/Login";
 import UserFeed from "./feed/UserFeed";
 import Navbarout from "./navigation/Navbarout";
+import Navbarin from "./navigation/Navbarin";
+import Settings from "./profile/Settings";
+import PersonalFeed from "./feed/PersonalFeed";
 
 class App extends React.Component {
   constructor() {
@@ -17,24 +20,37 @@ class App extends React.Component {
     this.state = {
       articles: "",
       tags: "",
+      currentUser: null,
     };
   }
   componentDidMount() {
-    const articles = axios("/articles", {
-      method: "GET",
+    const articles = API.fetchArticles();
+    const tags = API.fetchTags();
+    const currentUser = API.fetchCurrentUser();
+
+    Promise.all([articles, tags, currentUser]).then(
+      (res) =>
+        this.setState({
+          articles: res[0].data.articles,
+          tags: res[1].data.tags,
+          currentUser: res[2].currentUser,
+        })
+      // console.log(res, "Promise resolved")
+    );
+  }
+  logout = (id) => {
+    console.log(`logout clicked ${id}`);
+    fetch(`/users/${id}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-    });
-    // const articles = API.fetchArticles();
-    const tags = API.fetchTags();
-    Promise.all([articles, tags]).then((res) =>
+    }).then((res) => {
       this.setState({
-        articles: res[0].data.articles,
-        tags: res[1].data.tags,
-      })
-    );
-  }
+        currentUser: null,
+      });
+    });
+  };
 
   render() {
     return (
@@ -68,10 +84,27 @@ class App extends React.Component {
       //   </aside>
       // </>
       <Router>
-        <Navbarout />
+        {this.state.currentUser ? (
+          <Navbarout currentUser={this.state.currentUser} />
+        ) : (
+          <Navbarin />
+        )}
         <Switch>
           <Route exact path="/articles/new">
             <CreateArticle />
+          </Route>
+          <Route exact path="/">
+            <Global
+              tags={this.state.tags}
+              articles={this.state.articles}
+              currentUser={this.state.currentUser}
+            />
+          </Route>
+          <Route exact path="users/:name">
+            <PersonalFeed />
+          </Route>
+          <Route exact path="/users/:id/settings">
+            <Settings logout={this.logout} />
           </Route>
         </Switch>
       </Router>
