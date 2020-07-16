@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class Api::V1::ArticlesController < ApplicationController
   before_action :ensure_logged_in , only: [:create, :show, :update]
   
 
@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
     puts @articles.inspect, "all articles"
-    render json: {articles: @articles}
+    # render json: {articles: @articles}
   end
 
   def new
